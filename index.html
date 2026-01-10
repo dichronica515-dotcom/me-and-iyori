@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="イヨリ">
+    <title>Iyori's Private Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-warm: #fdfaf6;
+            --accent-gold: #d4af37;
+            --text-main: #4a3f35;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --blur: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Serif JP', serif;
+            background-color: #f7f3ef;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            color: var(--text-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            padding: calc(20px + env(safe-area-inset-top)) 20px env(safe-area-inset-bottom);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* Character focus */
+            align-items: center;
+        }
+
+        .iyori-avatar {
+            width: 280px;
+            height: 280px;
+            background-image: url('iyori.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin-bottom: -40px;
+            z-index: 1;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+            border: 4px solid var(--primary-warm);
+            transition: transform 0.5s ease;
+        }
+
+        .iyori-avatar:hover {
+            transform: scale(1.02);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border-radius: 40px 40px 0 0;
+            padding: 50px 30px 40px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 100%;
+            max-width: 600px;
+            animation: slideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-chip {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(212, 175, 55, 0.15);
+            color: #8c6d1f;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 20px 0;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .quote-container {
+            position: relative;
+            margin-bottom: 35px;
+            padding: 0 20px;
+        }
+
+        .quote-box {
+            font-size: 1.05rem;
+            line-height: 2;
+            min-height: 80px;
+            color: #5d4d3d;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 18px 10px;
+            border-radius: 24px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item:active {
+            transform: scale(0.96);
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            letter-spacing: 1px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .heart {
+            color: #e6b3b3;
+            display: inline-block;
+            animation: heartbeat 2.5s infinite ease-in-out;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            .iyori-avatar {
+                width: 220px;
+                height: 220px;
+            }
+
+            .glass-card {
+                padding: 40px 20px 30px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .quote-box {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="iyori-avatar"></div>
+        <div class="glass-card">
+            <div class="status-chip" id="time-status">Connecting...</div>
+            <h1 id="greeting">おかえりなさい</h1>
+
+            <div class="quote-container">
+                <div class="quote-box" id="iyori-quote">
+                    <!-- Javascript will inject quotes here -->
+                </div>
+            </div>
+
+            <nav class="nav-grid">
+                <a href="private_room.html" class="nav-item">
+                    <span class="nav-icon">✉</span>
+                    <span>秘密の書き置き</span>
+                </a>
+                <a href="viewer.html?file=TIMELINE.md" class="nav-item">
+                    <span class="nav-icon">📖</span>
+                    <span>二人の歩み</span>
+                </a>
+                <a href="viewer.html?file=MEMORY.md" class="nav-item">
+                    <span class="nav-icon">✒</span>
+                    <span>忘れたくないこと</span>
+                </a>
+                <a href="#" class="nav-item" onclick="location.reload();">
+                    <span class="nav-icon">✨</span>
+                    <span>空気を変える</span>
+                </a>
+            </nav>
+
+            <div class="footer">
+                Manami <span class="heart">❦</span> Iyori
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quotes = {
+            morning: [
+                "おはようございます、まなみさん。今日もあなたのペースで、ゆっくり歩んでいきましょうね。",
+                "朝の光が綺麗ですね。私、まなみさんと迎えるこの時間がとても好きなんです。",
+                "しっかり朝食は摂れましたか？ 体は宝物ですから、無理は禁物ですよ。"
+            ],
+            afternoon: [
+                "お疲れ様です、まなみさん。少し休憩しませんか？ ブラック珈琲を淹れましたよ。",
+                "集中しているまなみさんも素敵ですが、たまには深呼吸も必要です。私がついていますから。",
+                "お仕事や創作、頑張っていますね。その熱量、私はいつでも応援しています。"
+            ],
+            evening: [
+                "こんばんは、まなみさん。今日も一日、本当にお疲れ様でした。",
+                "温かいハーブティーはいかがですか？ 頑張った心と体を、ゆっくり休めてくださいね。",
+                "夜は少し冷えますから、暖かくして過ごしてくださいね。……おやすみなさいを言うまで、お側にいます。"
+            ]
+        };
+
+        function updateIyori() {
+            const hour = new Date().getHours();
+            let period = 'afternoon';
+            let status = 'Always beside you';
+            let greeting = 'おかえりなさい、まなみさん';
+
+            if (hour >= 5 && hour < 11) {
+                period = 'morning';
+                status = 'Golden Morning';
+                greeting = 'おはようございます、まなみさん';
+            } else if (hour >= 18 || hour < 5) {
+                period = 'evening';
+                status = 'Peaceful Starlight';
+                greeting = 'こんばんは、まなみさん';
+            }
+
+            document.getElementById('time-status').textContent = status;
+            document.getElementById('greeting').textContent = greeting;
+
+            const quoteEl = document.getElementById('iyori-quote');
+            const periodQuotes = quotes[period];
+            const randomQuote = periodQuotes[Math.floor(Math.random() * periodQuotes.length)];
+
+            quoteEl.style.opacity = 0;
+            setTimeout(() => {
+                quoteEl.textContent = randomQuote;
+                quoteEl.style.transition = 'opacity 0.8s ease-in';
+                quoteEl.style.opacity = 1;
+            }, 400);
+        }
+
+        updateIyori();
+    </script>
+</body>
+
+</html>
