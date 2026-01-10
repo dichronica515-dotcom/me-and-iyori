@@ -9,3 +9,4 @@ git branch -M main
 git remote add origin https://github.com/dichronica515-dotcom/me-and-iyori
 # 3. データを送る
 git push -u origin main
+https://dichronica515-dotcom.github.io/me-and-iyori/
