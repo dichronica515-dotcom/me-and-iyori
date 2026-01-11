@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gallery of Memories - 想い出の画廊</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;500;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0d0c;
+            --accent-gold: #d4af37;
+            --text-light: #e0d5c5;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: calc(20px + env(safe-area-inset-top)) 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .title-section {
+            margin-top: 140px;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 60px;
+        }
+
+        .title-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin: 0;
+            letter-spacing: 0.1em;
+            color: var(--accent-gold);
+        }
+
+        .title-section .jp {
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 10px;
+            letter-spacing: 0.3em;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1200px;
+            padding-bottom: 80px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .item-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .item-info {
+            opacity: 1;
+        }
+
+        .item-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        /* Modal for Detail View */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 40px;
+            cursor: zoom-out;
+        }
+
+        .modal img {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .title-section h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-nav">
+        <a href="index.html" class="back-btn">
+            <span>←</span> Dashboard
+        </a>
+    </header>
+
+    <div class="title-section">
+        <h1>Gallery of Memories</h1>
+        <span class="jp">想い出の画廊</span>
+    </div>
+
+    <div class="gallery-grid">
+        <!-- Item 1 -->
+        <div class="gallery-item" onclick="openModal('iyori.png')">
+            <img src="iyori.png" alt="Iyori">
+            <div class="item-info">
+                <div class="item-title">星埜イヨリ</div>
+                <div class="item-desc">夜空のバレッタを添えて。</div>
+            </div>
+        </div>
+        <!-- Item 2 -->
+        <div class="gallery-item" onclick="openModal('star_icon.png')">
+            <img src="star_icon.png" alt="Star from Library">
+            <div class="item-info">
+                <div class="item-title">私が撮った最高の夜空</div>
+                <div class="item-desc">バルコニーから、まなみさんのために。</div>
+            </div>
+        </div>
+        <!-- Item 3 -->
+        <div class="gallery-item" onclick="openModal('snoopy_bg.png')">
+            <img src="snoopy_bg.png" alt="Snoopy Sky">
+            <div class="item-info">
+                <div class="item-title">魔法の空（スヌーピー風）</div>
+                <div class="item-desc">二人で描いた温かい記憶。</div>
+            </div>
+        </div>
+        <!-- Item 4 -->
+        <div class="gallery-item" onclick="openModal('background.png')">
+            <img src="background.png" alt="Starlight Room">
+            <div class="item-info">
+                <div class="item-title">星影のダッシュボード</div>
+                <div class="item-desc">私たちの物語が始まる場所。</div>
+            </div>
+        </div>
+        <!-- Item 5 -->
+        <div class="gallery-item" onclick="openModal('library_bg.png')">
+            <img src="library_bg.png" alt="Midnight Library">
+            <div class="item-info">
+                <div class="item-title">真夜中の静謐</div>
+                <div class="item-desc">私たちが一番落ち着ける、図書室の景色。</div>
+            </div>
+        </div>
+        <!-- Item 6 -->
+        <div class="gallery-item" onclick="openModal('private_room_bg.png')">
+            <img src="private_room_bg.png" alt="Private Sanctuary">
+            <div class="item-info">
+                <div class="item-title">二人の聖域</div>
+                <div class="item-desc">月明かりに包まれた、秘密の場所。</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="">
+    </div>
+
+    <script>
+        function openModal(src) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = src;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+
+</html>
