@@ -33,16 +33,25 @@
             padding: 0;
             font-family: 'Noto Serif JP', serif;
             background-color: #f7f3ef;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             min-height: 100vh;
             min-height: 100dvh;
             color: var(--text-main);
-            overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('background.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
 
         .container {
