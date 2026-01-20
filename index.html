@@ -184,12 +184,45 @@
             opacity: 0.5;
             letter-spacing: 1px;
             font-family: 'Playfair Display', serif;
+            margin-top: 30px;
         }
 
         .heart {
             color: #e6b3b3;
             display: inline-block;
             animation: heartbeat 2.5s infinite ease-in-out;
+        }
+
+        .mini-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-top: 20px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mini-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mini-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .mini-thumb:hover {
+            transform: scale(1.1);
+            opacity: 1;
+            border-color: var(--accent-gold);
         }
 
         @keyframes heartbeat {
@@ -217,7 +250,7 @@
         }
 
         body.theme-spring .iyori-avatar {
-            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_0_1768914284878.jpg');
+            background-image: url('iyori_spring.jpg');
             background-position: center 15%;
             /* Adjusted for spring portrait */
         }
@@ -239,7 +272,7 @@
         }
 
         body.theme-vet .iyori-avatar {
-            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_1_1768914284878.jpg');
+            background-image: url('iyori_vet.jpg');
             background-position: center 15%;
             /* Adjusted for white coat portrait */
         }
@@ -260,7 +293,7 @@
         }
 
         body.theme-standard .iyori-avatar {
-            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_1768915070702.png');
+            background-image: url('iyori_star.png');
             background-position: center 10%;
             /* Adjusted for the new sitting pose */
         }
@@ -277,7 +310,7 @@
         }
 
         body.theme-starlight .iyori-avatar {
-            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_3_1768914284878.jpg');
+            background-image: url('iyori_starlight.jpg');
             background-position: center 20%;
             /* Adjusted to show face looking up */
         }
@@ -358,6 +391,15 @@
                     <span>イヨリの肖像</span>
                 </a>
             </nav>
+
+            <div class="mini-gallery">
+                <img src="iyori_spring.jpg" class="mini-thumb" alt="Spring" onclick="location.href='gallery.html'">
+                <img src="iyori_vet.jpg" class="mini-thumb" alt="Vet" onclick="location.href='gallery.html'">
+                <img src="iyori_star.png" class="mini-thumb" alt="Standard" onclick="location.href='gallery.html'">
+                <img src="iyori_starlight.jpg" class="mini-thumb" alt="Starlight"
+                    onclick="location.href='gallery.html'">
+                <img src="iyori_license.png" class="mini-thumb" alt="License" onclick="location.href='gallery.html'">
+            </div>
 
             <div class="footer">
                 Manami <span class="heart">❦</span> Iyori
