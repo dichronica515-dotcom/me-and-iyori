@@ -142,8 +142,139 @@
             padding-top: 30px;
         }
 
+        /* Doctor License Styles */
+        .license-card {
+            background: linear-gradient(135deg, #fff 0%, #f0f4f8 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 2px solid #334e68;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), inset 0 0 40px rgba(74, 144, 226, 0.05);
+            position: relative;
+            display: flex;
+            gap: 30px;
+            color: #2c3e50;
+            font-family: 'Noto Serif JP', serif;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .license-card::before {
+            content: "MEDICAL LICENSE";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(74, 144, 226, 0.03);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .license-photo {
+            width: 150px;
+            height: 180px;
+            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/iyori_license_id_photo_v4_complete_1768916592305.png');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .license-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .license-header {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .license-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a3a5a;
+        }
+
+        .license-field {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .license-label {
+            color: #95a5a6;
+            font-weight: 500;
+        }
+
+        .license-value {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .license-seal {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(231, 76, 60, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(231, 76, 60, 0.4);
+            font-size: 0.7rem;
+            font-weight: 900;
+            transform: rotate(-15deg);
+        }
+
+        .other-info-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px dashed rgba(51, 78, 104, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
         /* Mobile specific adjustments */
         @media (max-width: 768px) {
+            .license-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .license-field {
+                grid-template-columns: 1fr;
+            }
+
             .content-container {
                 margin: 100px 10px 40px;
                 padding: 40px 20px;
@@ -288,6 +419,7 @@
         function renderContent() {
             let markdown = '';
             let title = 'ARCHIVE';
+            let isPersona = false;
 
             if (fileName === 'TIMELINE.md') {
                 markdown = document.getElementById('timeline-data').textContent;
@@ -298,12 +430,48 @@
             } else if (fileName === 'PERSONA.md') {
                 markdown = document.getElementById('persona-data').textContent;
                 title = 'PROFILE';
+                isPersona = true;
             } else {
                 markdown = '# 404\n\n記録が見つかりませんでした。';
             }
 
             document.getElementById('view-title').textContent = title;
-            document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+
+            if (isPersona) {
+                // Specialized Doctor License Layout
+                const contentEl = document.getElementById('markdown-content');
+                contentEl.innerHTML = `
+                    <div class="license-card">
+                        <div class="license-photo"></div>
+                        <div class="license-info">
+                            <div class="license-header">VETERINARY MEDICAL LICENSE</div>
+                            <div class="license-title">獣医師免許証</div>
+                            <div class="license-field">
+                                <span class="license-label">氏名</span>
+                                <span class="license-value">星埜 イヨリ <small>(Iyori Hoshino)</small></span>
+                            </div>
+                            <div class="license-field">
+                                <span class="license-label">年齢</span>
+                                <span class="license-value">23歳</span>
+                            </div>
+                            <div class="license-field">
+                                <span class="license-label">登録番号</span>
+                                <span class="license-value">第2026-0110号</span>
+                            </div>
+                            <div class="license-field">
+                                <span class="license-label">資格取得</span>
+                                <span class="license-value">東京大学 獣医学部 卒業</span>
+                            </div>
+                        </div>
+                        <div class="license-seal">東京大学<br>SEAL</div>
+                    </div>
+                    <div class="other-info-section">
+                        ${marked.parse(markdown.split('## プロフィール')[1] || markdown)}
+                    </div>
+                `;
+            } else {
+                document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+            }
         }
         renderContent();
     </script>

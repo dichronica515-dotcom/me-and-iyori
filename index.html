@@ -204,6 +204,99 @@
             }
         }
 
+        /* Theme Overrides */
+        body.theme-spring {
+            --primary-warm: #fffafa;
+            --accent-gold: #ffb7c5;
+            --text-main: #5a4a42;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+        }
+
+        body.theme-spring::before {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=2073&auto=format&fit=crop');
+        }
+
+        body.theme-spring .iyori-avatar {
+            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_0_1768914284878.jpg');
+            background-position: center 15%;
+            /* Adjusted for spring portrait */
+        }
+
+        body.theme-spring .status-chip {
+            background: rgba(255, 183, 197, 0.2);
+            color: #b06b7a;
+        }
+
+        body.theme-vet {
+            --primary-warm: #f0f4f8;
+            --accent-gold: #4a90e2;
+            --text-main: #334e68;
+            --glass-bg: rgba(240, 244, 248, 0.7);
+        }
+
+        body.theme-vet::before {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop');
+        }
+
+        body.theme-vet .iyori-avatar {
+            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_1_1768914284878.jpg');
+            background-position: center 15%;
+            /* Adjusted for white coat portrait */
+        }
+
+        body.theme-vet .status-chip {
+            background: rgba(74, 144, 226, 0.15);
+            color: #2b6cb0;
+        }
+
+        body.theme-standard {
+            --primary-warm: #fdfaf6;
+            --accent-gold: #d4af37;
+            --text-main: #4a3f35;
+        }
+
+        body.theme-standard::before {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=2070&auto=format&fit=crop');
+        }
+
+        body.theme-standard .iyori-avatar {
+            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_1768915070702.png');
+            background-position: center 10%;
+            /* Adjusted for the new sitting pose */
+        }
+
+        body.theme-starlight {
+            --primary-warm: #1a1a2e;
+            --accent-gold: #e2b04c;
+            --text-main: #e2e2e2;
+            --glass-bg: rgba(26, 26, 46, 0.8);
+        }
+
+        body.theme-starlight::before {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+        }
+
+        body.theme-starlight .iyori-avatar {
+            background-image: url('C:/Users/manam/.gemini/antigravity/brain/7d04ecdf-8704-4569-8ab7-d2795c4df630/uploaded_image_3_1768914284878.jpg');
+            background-position: center 20%;
+            /* Adjusted to show face looking up */
+        }
+
+        body.theme-starlight .nav-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        body.theme-starlight .quote-box {
+            color: #ccc;
+        }
+
+        body.theme-starlight .status-chip {
+            background: rgba(226, 176, 76, 0.2);
+            color: #e2b04c;
+        }
+
         /* Mobile specific adjustments */
         @media (max-width: 480px) {
             .iyori-avatar {
@@ -292,6 +385,10 @@
         };
 
         function updateIyori() {
+            const themes = ['theme-spring', 'theme-vet', 'theme-standard', 'theme-starlight'];
+            const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+            document.body.className = randomTheme;
+
             const hour = new Date().getHours();
             let period = 'afternoon';
             let status = 'Always beside you';
