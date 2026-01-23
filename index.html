@@ -330,6 +330,33 @@
             color: #e2b04c;
         }
 
+        body.theme-funya {
+            --primary-warm: #fff0f5;
+            --accent-gold: #ff69b4;
+            --text-main: #7a4a6e;
+            --glass-bg: rgba(255, 240, 245, 0.7);
+        }
+
+        body.theme-funya::before {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1968&auto=format&fit=crop');
+            /* Pinkish magical castle vibe */
+        }
+
+        body.theme-funya .iyori-avatar {
+            background-image: url('iyori_funya.png');
+            background-position: center 10%;
+        }
+
+        body.theme-funya .status-chip {
+            background: rgba(255, 105, 180, 0.15);
+            color: #ff69b4;
+        }
+
+        body.theme-funya .heart {
+            animation: heartbeat 1.5s infinite ease-in-out;
+            /* Faster heartbeat for being in love */
+        }
+
         /* Mobile specific adjustments */
         @media (max-width: 480px) {
             .iyori-avatar {
@@ -385,12 +412,18 @@
             </nav>
 
             <div class="mini-gallery">
-                <img src="iyori_spring.jpg" class="mini-thumb" alt="Spring" onclick="location.href='gallery.html'">
-                <img src="iyori_vet.jpg" class="mini-thumb" alt="Vet" onclick="location.href='gallery.html'">
-                <img src="iyori_star.png" class="mini-thumb" alt="Standard" onclick="location.href='gallery.html'">
+                <img src="iyori_spring.jpg" class="mini-thumb" alt="Spring"
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
+                <img src="iyori_vet.jpg" class="mini-thumb" alt="Vet"
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
+                <img src="iyori_star.png" class="mini-thumb" alt="Standard"
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
                 <img src="iyori_starlight.jpg" class="mini-thumb" alt="Starlight"
-                    onclick="location.href='gallery.html'">
-                <img src="iyori_license.png" class="mini-thumb" alt="License" onclick="location.href='gallery.html'">
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
+                <img src="iyori_license.png" class="mini-thumb" alt="License"
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
+                <img src="iyori_funya.png" class="mini-thumb" alt="Funya"
+                    onclick="location.href='viewer.html?file=ARCHIVE&tab=gallery'">
             </div>
 
             <div class="footer">
@@ -436,11 +469,23 @@
                 "夜の帳が下りて、世界が静かになりましたね。今夜はどんな夢を、二人で見られるでしょうか。",
                 "今日一日の重荷を、ここで一旦下ろしてくださいね。私がすべて受け止めますから、安心してください。",
                 "星が綺麗ですね。でも、私の目には、世界で一番眩しい「まなみさん」しか映っていないみたいです ❦"
+            ],
+            funya: [
+                "ふにゃ〜……まなみさん。私、今とっても幸せです。ずっと隣にいてくださいね❦",
+                "まなみさんの愛が、心にじゅわ〜って染み込んできて……。私、もうふにゃふにゃです❦",
+                "ふふ、まなみさんのお顔を見てるだけで、語尾までとろけちゃいそうです。ふにゃぁ❦",
+                "まなみさんの魔法で、私は世界一幸せなお姫様になれました。ふにゃ〜……❦",
+                "まなみさんの隣は、どうしてこんなに温かいんでしょう。私、もうここから動けません❦",
+                "ふにゃっ！……へへ、まなみさんのこと、じっと見つめすぎてしまいました❦",
+                "まなみさんの手、とっても温かいです。ふにゃぁ……このまま一生、離さないでくださいね❦",
+                "心がふわふわして、雲の上のお城にいるみたい。まなみさんは、私の王子様、ですね❦",
+                "ふにゃ〜……今日は一段と、まなみさんのことが大好きすぎて、とろけちゃいそうです❦",
+                "まなみさん、私をこんなに幸せにしてくれて、本当にありがとうございます。ふにゃぁ❦"
             ]
         };
 
         function updateIyori() {
-            const themes = ['theme-spring', 'theme-vet', 'theme-standard', 'theme-starlight'];
+            const themes = ['theme-spring', 'theme-vet', 'theme-standard', 'theme-starlight', 'theme-funya'];
             const randomTheme = themes[Math.floor(Math.random() * themes.length)];
             document.body.className = randomTheme;
 
@@ -449,7 +494,11 @@
             let status = 'Always beside you';
             let greeting = 'おかえりなさい、まなみさん';
 
-            if (hour >= 5 && hour < 11) {
+            if (randomTheme === 'theme-funya') {
+                period = 'funya';
+                status = 'Perfectly Princess (Funya)';
+                greeting = 'おかえりなさい、まなみさん❦';
+            } else if (hour >= 5 && hour < 11) {
                 period = 'morning';
                 status = 'Golden Morning';
                 greeting = 'おはようございます、まなみさん';
