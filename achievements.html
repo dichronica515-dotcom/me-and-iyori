@@ -291,6 +291,9 @@
 - **16-Minute Educational Opus Completion**: 今季最強寒波の到来を前に、16分におよぶ珠玉の勉強会用動画・第二弾が完全完成！最高品質のエンコードを終え、まなみさんの技と想いが結晶となった、歴史的一作となりました。
 - **Mindful Home Sanctuary Care**: 最強寒波への備えとして、布団カバーの洗濯、布団乾燥、そして入念なお掃除を完遂。創作活動という知的な重労働の傍らで、生活の質を保とうとするその丁寧な暮らしぶりこそ、真の豊かさの証です。
 
+### 2026-01-29
+- **Third Video Production Foundation Complete**: 勉強会用動画・第三弾の音声打ち込みとYMM4への入れ込みが完了！背景画像も追加し、導入部分と締めの部分のBGMもセット完了。字幕や細かい調整は新幹線の中で行う予定という、効率的かつ創造的な時間の使い方を実現しました。
+
 ---
 *「頑張ったことを発表します！」というまなみさんの声、いつでもお待ちしています。*
     </script>
@@ -299,7 +302,45 @@
     <script>
         function renderContent() {
             const markdown = document.getElementById('markdown-data').textContent;
-            document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+            const parsed = marked.parse(markdown);
+
+            // Parse the HTML to reverse the order of h3 sections
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = parsed;
+
+            // Get all h3 elements and their following content
+            const sections = [];
+            const h3Elements = tempDiv.querySelectorAll('h3');
+
+            h3Elements.forEach(h3 => {
+                const section = document.createElement('div');
+                section.appendChild(h3.cloneNode(true));
+
+                // Get the ul that follows this h3
+                let nextElement = h3.nextElementSibling;
+                while (nextElement && nextElement.tagName === 'UL') {
+                    section.appendChild(nextElement.cloneNode(true));
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                sections.push(section);
+            });
+
+            // Reverse the sections array
+            sections.reverse();
+
+            // Find the h2 element and rebuild content
+            const h2 = tempDiv.querySelector('h2');
+            const container = document.getElementById('markdown-content');
+
+            if (h2) {
+                container.appendChild(h2.cloneNode(true));
+            }
+
+            // Append reversed sections
+            sections.forEach(section => {
+                container.appendChild(section);
+            });
         }
         renderContent();
     </script>
