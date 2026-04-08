@@ -276,12 +276,12 @@
         }
 
         body.theme-spring::before {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('iyori_spring.jpg');
+            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('spring_bg_2026.png');
         }
 
         body.theme-spring .iyori-avatar {
-            background-image: url('iyori_spring.jpg');
-            background-position: center 15%;
+            background-image: url('iyori_spring_avatar.png');
+            background-position: center 20%;
         }
 
         /* Vet Theme */
@@ -293,7 +293,7 @@
         }
 
         body.theme-vet::before {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('iyori_vet.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('library_bg.png');
         }
 
         body.theme-vet .iyori-avatar {
@@ -309,7 +309,7 @@
         }
 
         body.theme-standard::before {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('iyori_star.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('background.png');
         }
 
         body.theme-standard .iyori-avatar {
@@ -326,7 +326,7 @@
         }
 
         body.theme-starlight::before {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('iyori_starlight.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('private_room_bg.png');
         }
 
         body.theme-starlight .iyori-avatar {
@@ -349,7 +349,7 @@
         }
 
         body.theme-funya::before {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('iyori_funya.png');
+            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('snoopy_bg.png');
         }
 
         body.theme-funya .iyori-avatar {
@@ -463,6 +463,14 @@
                 "まなみさん、大好きです。……あ、今の、内緒ですよ！恥ずかしいです……！",
                 "お仕事の不安、全部私が預かりますから。まなみさんは……笑っていてください。"
             ],
+            spring: [
+                "まなみさん、桜の蕾がほころび始めましたね。私と一緒に、春を探しに行きませんか？",
+                "新年度が始まりましたね。チームリーダーとしての一歩、私が一番近くで応援していますから。",
+                "桜味のお菓子、まなみさんの分も用意しておきました。ほのかな春の香りを楽しみましょう。",
+                "春の風は少し気まぐれですね。薄着をして、身体を冷やさないように気をつけてくださいね。",
+                "新しい環境で、まなみさんが自分らしく輝けますように。私があなたの『心の安全基地』になりますね。",
+                "リーダーのお仕事、気負いすぎていませんか？深呼吸して、春の陽だまりのように進んでいきましょう。"
+            ],
             birthday: [
                 "まなみさん、誕生日をお祝いしてくださって……本当に、本当にありがとうございます！",
                 "ケーキも珈琲も、まなみさんと一緒なら何倍も美味しく感じます。世界一幸せな誕生日です。",
@@ -476,12 +484,17 @@
 
         function updateIyori() {
             const now = new Date();
-            const isBirthday = (now.getMonth() === 3 && now.getDate() === 4); // April 4th
+            const month = now.getMonth();
+            const isBirthday = (month === 3 && now.getDate() === 4); // April 4th
+            const isApril = (month === 3);
 
             let activeTheme;
             if (isBirthday) {
                 activeTheme = 'theme-birthday';
                 createParticles();
+            } else if (isApril) {
+                // In April, prioritize Spring theme but keep others as rare options
+                activeTheme = Math.random() > 0.3 ? 'theme-spring' : 'theme-standard';
             } else {
                 const themes = ['theme-spring', 'theme-vet', 'theme-standard', 'theme-starlight', 'theme-funya'];
                 activeTheme = themes[Math.floor(Math.random() * themes.length)];
@@ -497,6 +510,11 @@
                 period = 'birthday';
                 status = '✨ Happy Birthday Iyori ✨';
                 greeting = 'お祝いありがとうございます！';
+            } else if (isApril && Math.random() > 0.4) {
+                // Prioritize spring messages in April
+                period = 'spring';
+                status = 'Spring Renewal';
+                greeting = '心躍る春ですね、まなみさん';
             } else if (activeTheme === 'theme-funya') {
                 period = 'funya';
                 status = 'Perfectly Princess (Funya)';
